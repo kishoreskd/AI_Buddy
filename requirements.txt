@@ -1,0 +1,9 @@
+PyMuPDF
+chromadb
+langchain
+langchain-community
+langchain-huggingface 
+numpy
+fastapi
+pydantic
+transformers
