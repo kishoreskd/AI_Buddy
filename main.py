@@ -22,14 +22,12 @@ def health_check():
 
 def generate(query, vectorResult):
     # Formatting inputs
-    system_prompt = "You are a Q&A assistant. Your goal is to answer questions accurately based on the instructions and context provided."
+    system_prompt = "You are a medical assistant. Based on the following clinical documents, answer the user's question accurately and concisely using only the relevant content from the documents."
 
     formatted_context = "\n".join([doc.chunk_text for doc in vectorResult])
 
     # Creating prompt
     prompt = f"{query}\n{formatted_context}\n"
-
-    print(f"Formatted context: {formatted_context}")
 
     # Initializing pipeline
     pipe = pipeline(
