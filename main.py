@@ -10,7 +10,7 @@ import re
 
 # from langchain.llms import ollama
 
-app = FastAPI()
+app = FastAPI(title="My API", version="1.0")
 chroma_client = ChromaClient()
 embedding_model = EmbeddingGenerator()
 
@@ -61,10 +61,22 @@ def generate(query, vectorResult):
     )
     response = outputs[0]["generated_text"]
 
-    # Cleaning the response
-    response = re.sub(r"<\|.*?\|>", "", response)  # Remove template tokens
-    response = re.sub(r"</s>", "", response)  # Remove end-of-sequence tokens
-    response = response.replace(system_prompt, "").strip()  # Remove system prompt
+    # Extract user message
+    user_match = re.search(r"<\|user\|>\n(.*?)</s>", response, re.DOTALL)
+    user_text = user_match.group(1).strip() if user_match else ""
+
+    # Extract assistant message
+    assistant_match = re.search(r"<\|assistant\|>\n(.*)", response, re.DOTALL)
+    assistant_text = assistant_match.group(1).strip() if assistant_match else ""
+
+    # # Cleaning the response
+    # response = re.sub(r"<\|.*?\|>", "", response)  # Remove template tokens
+    # response = re.sub(r"</s>", "", response)  # Remove end-of-sequence tokens
+    # response = response.replace(system_prompt, "").strip()  # Remove system prompt
+
+    response = f"{user_text}\n{assistant_text}"
+
+    print("Response:", response)
 
     return response
 
@@ -76,6 +88,8 @@ def get_similar_responses(request: QueryRequest):
     try:
         embedding = embedding_model.get_embeddings(request.input)
         results = chroma_client.query_embedding(embedding, top_k=request.top_k)
+
+        print(results)
 
         response = [
             QueryResult(

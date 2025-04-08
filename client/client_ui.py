@@ -59,7 +59,7 @@ if query:
     with st.spinner("💬 Generating answer..."):
         response = requests.post(
             "http://localhost:8000/query",  # Your FastAPI endpoint
-            json={"input": query, "top_k": 5},
+            json={"input": query, "top_k": 10},
         )
 
         if response.status_code == 200:

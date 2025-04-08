@@ -37,7 +37,8 @@ class EmbeddingGenerator:
     # helpfull for createing embeddings for a single text
     def get_embeddings(self, text):
         try:
-            # print(f"Generating {text} embeddings for text...")
+            print(f"Generating {text} embeddings for text...")
+
             embeddings = self.embedding_model.embed_query(text)
             # print(f"Generated embeddings {embeddings}  for text.")
             return embeddings

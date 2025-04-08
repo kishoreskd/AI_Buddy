@@ -1,5 +1,5 @@
-from pdf_loader import PDFLoader
-from text_chunker import TextChunker
+from ingestion_pipeline.pdf_loader import PDFLoader
+from ingestion_pipeline.text_chunker import TextChunker
 from services.chroma_client import ChromaClient
 from services.embedding_generator import EmbeddingGenerator
 
@@ -52,9 +52,9 @@ class RAGIngestionPipeline:
         print("completed.")
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     print("RAG Ingestion Pipeline")
-#     file_path = "files/clinical_skills_guidance.pdf"  # Replace with your PDF file path
-#     pipeline = RAGIngestionPipeline(file_path)
-#     pipeline.run()
+    print("RAG Ingestion Pipeline")
+    file_path = "files/clinical_skills_guidance.pdf"  # Replace with your PDF file path
+    pipeline = RAGIngestionPipeline(file_path)
+    pipeline.run()
